@@ -1,9 +1,4 @@
 
-// CNC Shield Stepper  Control Demo
-// Superb Tech
-// www.youtube.com/superbtech
-// https://www.youtube.com/watch?v=zUb8tiFCwmk&ab_channel=SuperbTech
-
 // Demo of 2d robot movement both fast and slow, changing directions and with breaks
 
 const int StepX = 2;
@@ -21,16 +16,12 @@ void setup() {
   pinMode(DirY,OUTPUT);
   pinMode(StepZ,OUTPUT);
   pinMode( DirZ,OUTPUT);
-
 }
 
 void loop() {
  digitalWrite(DirX, HIGH); // set direction, HIGH for clockwise, LOW for anticlockwise
  digitalWrite(DirY, HIGH);
  digitalWrite(DirZ, HIGH);
-
- // Right +, left -
- // Up +, down -
  
  for(int x = 0; x<400; x++) { // Fast right
   //digitalWrite(StepZ,HIGH);
