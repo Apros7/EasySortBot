@@ -1,15 +1,22 @@
 
 // defs
+// const int StepX1 = 2;
+// const int DirX1 = 5;
+// const int StepX2 = 3;
+// const int DirX2 = 6;
+// const int StepY = 4;
+// const int DirY = 7;
+// const int StepZ = 12;
+// const int DirZ = 13;
+
 const int StepX1 = 2;
 const int DirX1 = 5;
-const int StepX2 = 3;
-const int DirX2 = 6;
-const int StepY = 4;
-const int DirY = 7;
-const int StepZ = 12;
-const int DirZ = 13;
+const int StepX2 = 4;
+const int DirX2 = 7;
+const int StepY = 12;
+const int DirY = 13;
 
-const int MinDelayTime = 1000;
+const int MinDelayTime = 1300;
 long CurrentPositions[3]; // [x, y, z]
 const int MaxX = 75;
 const int MaxY = 75;
@@ -36,7 +43,7 @@ int getDirection(int steps) {
 void moveX(int amount) {
   int steps = mmToSteps(amount);
   digitalWrite(DirX1,getDirection(steps));
-  digitalWrite(DirX1,getDirection(steps));
+  digitalWrite(DirX2,getDirection(steps));
   for(int x = 0; x<abs(steps); x++) {
     digitalWrite(StepX1,HIGH);
     digitalWrite(StepX2,HIGH);
@@ -48,7 +55,14 @@ void moveX(int amount) {
 }
 
 void moveY(int amount) {
-  return 0;
+  int steps = mmToSteps(amount);
+  digitalWrite(DirY,getDirection(steps));
+  for(int x = 0; x<abs(steps); x++) {
+    digitalWrite(StepY,HIGH);
+    delayMicroseconds(MinDelayTime); 
+    digitalWrite(StepY,LOW);
+    delayMicroseconds(MinDelayTime);
+ }
 }
 
 void moveZ(int amount) {
@@ -69,13 +83,27 @@ void setup_init() {
   pinMode(DirX1,OUTPUT);
   pinMode(StepY,OUTPUT);
   pinMode(DirY,OUTPUT);
-  pinMode(StepX1,OUTPUT);
+  pinMode(StepX2,OUTPUT);
   pinMode(DirX2,OUTPUT);
+}
+
+void test() {
+  for(int x = 0; x<100; x++) { // Fast right
+    digitalWrite(StepX1,HIGH);
+    digitalWrite(StepY,HIGH);
+    digitalWrite(StepX2,HIGH);
+    delayMicroseconds(2000);
+    digitalWrite(StepX1,LOW); 
+    digitalWrite(StepY,LOW);
+    digitalWrite(StepX2,LOW); 
+    delayMicroseconds(2000);
+  }
 }
 
 void setup() {
   setup_init();
-  long coordinates[] = {750, 0, 0};
+  test();
+  long coordinates[] = {200, 200, 0};
   move(coordinates);
   delay(2000);
   coordinates[0] = 0;
